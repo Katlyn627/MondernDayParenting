@@ -11,7 +11,7 @@ const graphqlAPI = process.env.NEXT_PUBLIC_PARENTINGBLOG_ENDPOINT;
 export default async function asynchandler(req, res) {
   const graphQLClient = new GraphQLClient((graphqlAPI), {
     headers: {
-      authorization: `Bearer ${process.env.NEXT_PUBLIC_PARENTINGBLOG_ENDPOINT}`,
+      authorization: `Bearer ${process.env.PARENTINGBLOG_TOKEN}`,
     },
   });
 

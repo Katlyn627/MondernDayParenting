@@ -207,7 +207,7 @@ export const getFeaturedPosts = async () => {
 };
 
 export const submitComment = async (obj) => {
-  const result = await fetch('/pages/api/comments.js', {
+  const result = await fetch('/pages/api', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
