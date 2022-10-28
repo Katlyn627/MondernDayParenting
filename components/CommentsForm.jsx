@@ -1,3 +1,4 @@
+import { FragmentsOnCompositeTypesRule } from 'graphql';
 import React, { useState, useEffect } from 'react';
 import { submitComment } from '../services';
 
@@ -16,6 +17,8 @@ const CommentsForm = ({ slug }) => {
     };
     setFormData(initalFormData);
   }, []);
+
+  console.log("Hello world!");
 
   const onInputChange = (e) => {
     const { target } = e;
