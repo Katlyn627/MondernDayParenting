@@ -11,9 +11,28 @@ const CommentsForm = ({ slug }) => {
   const storeDataEl = useRef();
 
   const handleCommentSubmisson = () => {
-    
-  }
+    setError(false);
 
+    const {value: comment} = comment.EL.current;
+    const {value: name} = name.EL.current;
+    const {value: email} = email.EL.current;
+    const {checked: storeData} = storeData.EL.current;
+
+    if(!comment || !name || !email){
+        setError(true);
+        return;
+    }
+
+    const commentObj = {name, email, comment, slug};
+
+    if(storeData){
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+    } else{
+      localStorage.removeItem('name', name);
+      localStorage.removeItem('email', email);
+    }
+  }
 
 
   return (
@@ -43,15 +62,22 @@ const CommentsForm = ({ slug }) => {
             name="email"
           />
       </div>
+      <div className ='grid grid-cols-1 gap-4 mb-4'>
+        <div>
+          <input ref={storeDataEl.el} type='checkbox' id='storeData' name='storData' value='true'/>
+          <label className= 'text-gray-500 cursor-pointer ml-2' htmlFor='storeData'> Save my email and name for the next time I comment.</label>
+        </div>
+      </div>
       {error && <p className= 'text-xs text-red-600'>All fields required!</p>}
       <div className='mt-8'>
-        <button type='button' onCLick={handleCommentSubmisson}>
-
+        <button 
+          type='button' 
+          onCLick={handleCommentSubmisson}
+          className='transition duration-500 ease hover:bg-pink-700 inline-block bg-yellow-600 text-lg rounded-full text-white px-8 py-3 cursor-pointer'>
+            Post Comment
         </button>
-
+        {showSuccessMessage && <span className='text-xl float-right font-semibold mt-3 text-blue-500'>Comment submitted for review.</span>}
       </div>
-
-
     </div>
   )
 }
