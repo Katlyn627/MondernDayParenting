@@ -1,9 +1,21 @@
-import React from 'react'
+import { GraphQLClient, gql } from "graphql-request";
 
-function comments() {
-  return (
-    <div>comments</div>
-  )
+const graphqlAPI = process.env.NEXT_PUBLIC_PARENTINGBLOG_ENDPOINT;
+
+export default async function comments(req, res){
+  const {name, email, slug, comment} = req.body
+  const graphQLClient = new GraphQLClient (graphqlAPI, {
+    headers: {
+      authorization: `Bearer ${process.env.PARENTINGBLOG_TOKEN}`
+    }
+  })
+
+  const query = gql`
+  mutation CreateComment($name: String!, $email: String!, $comment: String!, $slug: String!) {
+    createComment(data: {name: $name, email: $eamil, comment: $comment, post: { connect: {slug: $slug} } }) {id}
+  }
+  `
+  const result = await  graphQLClient.request(query, req.body)
+
+  return res.status(200).send(result)
 }
-
-export default comments

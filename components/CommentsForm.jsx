@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
+import { submitComment } from '../services';
 
 
 const CommentsForm = ({ slug }) => {
@@ -9,6 +10,11 @@ const CommentsForm = ({ slug }) => {
   const nameEl = useRef();
   const emailEl = useRef();
   const storeDataEl = useRef();
+
+  useEffect(() => {
+    nameEl.current.value = window.localStorage.getItem('name')
+    emailEl.current.value = window.localStorage.getItem('email')
+  }, [])
 
   const handleCommentSubmisson = () => {
     setError(false);
@@ -26,12 +32,21 @@ const CommentsForm = ({ slug }) => {
     const commentObj = {name, email, comment, slug};
 
     if(storeData){
-      localStorage.setItem('name', name);
-      localStorage.setItem('email', email);
+      window.localStorage.setItem('name', name);
+      window.localStorage.setItem('email', email);
     } else{
-      localStorage.removeItem('name', name);
-      localStorage.removeItem('email', email);
+      window.localStorage.removeItem('name', name);
+      window.localStorage.removeItem('email', email);
     }
+
+    submitComment(commentObj)
+    .then((res) => {
+        setshowSuccessMessage(true);
+
+        setTimeout(() => {
+          setshowSuccessMessage(false);
+        }, 3000);
+    } )
   }
 
 
@@ -72,7 +87,7 @@ const CommentsForm = ({ slug }) => {
       <div className='mt-8'>
         <button 
           type='button' 
-          onCLick={handleCommentSubmisson}
+          onClick={handleCommentSubmisson}
           className='transition duration-500 ease hover:bg-pink-700 inline-block bg-yellow-600 text-lg rounded-full text-white px-8 py-3 cursor-pointer'>
             Post Comment
         </button>
