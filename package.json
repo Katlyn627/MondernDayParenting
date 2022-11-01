@@ -12,6 +12,7 @@
     "moment": "^2.29.4",
     "next": "latest",
     "react": "18.1.0",
+    "react-comment-form": "^0.1.9",
     "react-dom": "18.1.0",
     "react-mentions": "^4.4.7",
     "react-multi-carousel": "^2.8.2",

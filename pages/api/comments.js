@@ -1,6 +1,7 @@
-import { GraphQLClient, gql } from "graphql-request";
+import { GraphQLClient, gql } from 'graphql-request';
 
 const graphqlAPI = process.env.NEXT_PUBLIC_PARENTINGBLOG_ENDPOINT;
+
 /** *************************************************************
 * Any file inside the folder pages/api is mapped to /api/* and  *
 * will be treated as an API endpoint instead of a page.         *
@@ -10,7 +11,7 @@ const graphqlAPI = process.env.NEXT_PUBLIC_PARENTINGBLOG_ENDPOINT;
 export default async function asynchandler(req, res) {
   const graphQLClient = new GraphQLClient((graphqlAPI), {
     headers: {
-      authorization: `Bearer ${process.env.GRAPHCMS_TOKEN}`,
+      authorization: `Bearer ${process.env.PARENTINGBLOG_TOKEN}`,
     },
   });
 
